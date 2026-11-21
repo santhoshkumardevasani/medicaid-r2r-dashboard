@@ -65,11 +65,10 @@ export function NavigationPanel({
           <span />
         </span>
         <span>
-          aster<span className="brand-period">.</span>
+          <span className="brand-period">MRTR</span>
         </span>
       </a>
-      <div className="workspace-label">FINANCE WORKSPACE</div>
-      <div className="sidebar-section-title">MEDICAID RECORD-TO-REPORT</div>
+      <div className="workspace-label">MEDICAID RECORD-TO-REPORT</div>
       <nav aria-label="Main navigation">
         {NAV_ITEMS.map(({ id, label, icon: Icon }) => (
           <button
@@ -85,29 +84,8 @@ export function NavigationPanel({
           </button>
         ))}
       </nav>
-      <div className="sidebar-control">
-        <span className="control-icon">
-          <ShieldCheck size={21} />
-        </span>
-        <strong>Confidence in every close</strong>
-        <p>
-          Evidence connected.
-          <br />
-          Decisions accounted for.
-        </p>
-        <span className="sidebar-security">
-          <LockKeyhole size={12} /> Synthetic demo workspace
-        </span>
-      </div>
+      
       <div className="sidebar-footer">
-        <button onClick={onHelp}>
-          <CircleHelp size={18} />
-          Demo guide
-        </button>
-        <button onClick={onSettings}>
-          <Settings2 size={18} />
-          Demo controls
-        </button>
         <div className="sidebar-version">
           <span className="status-dot" /> Assessment build · v1.0
         </div>

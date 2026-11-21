@@ -21,9 +21,7 @@ export function AgentQueue({
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">HUMAN-IN-THE-LOOP</div>
-          <h1>Analysis by agents. Decisions by you.</h1>
-          <p>Inspect the reasoning, validate the evidence, and record your judgment.</p>
+          <div className="eyebrow">AGENT REVIEW</div>
         </div>
         <Badge tone="purple">{pending} awaiting review</Badge>
       </div>

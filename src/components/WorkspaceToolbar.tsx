@@ -43,8 +43,8 @@ export function WorkspaceToolbar({
           </span>
         </div>
         <div className="topbar-right">
-          <span className="demo-tag">SYNTHETIC DATA</span>
-          <span className="topbar-divider" />
+          
+         
           <button
             className="profile-button"
             onClick={onOpenSettings}

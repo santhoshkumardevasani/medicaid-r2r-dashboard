@@ -21,9 +21,7 @@ export function OverviewSummary({
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">CONTROLLER WORKSPACE</div>
-          <h1>Every close. Clearly in view.</h1>
-          <p>Your Medicaid close, from the big picture to the evidence behind it.</p>
+          <div className="eyebrow">CLOSE OVERVIEW</div>
         </div>
         <div className={`close-pill ${summary.open === 0 ? 'close-pill-ready' : ''}`}>
           <span className="status-dot" />

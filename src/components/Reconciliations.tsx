@@ -57,9 +57,7 @@ export function Reconciliations({
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">RECONCILIATION WORKSPACE</div>
-          <h1>Follow the difference.</h1>
-          <p>Find the break, inspect the support, and bring the right people into the close.</p>
+          <div className="eyebrow">RECONCILIATIONS</div>
         </div>
       </div>
       <section className="panel">

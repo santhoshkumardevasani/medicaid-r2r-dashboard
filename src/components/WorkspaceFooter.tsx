@@ -11,13 +11,10 @@ export function WorkspaceFooter({
   return (
     <footer className="workspace-footer">
       <span>
-        <Activity size={14} /> Aster · Medicaid R2R
+        <Activity size={14} /> Medicaid R2R
       </span>
       <span>Last service snapshot: {dateTime(lastSynced)}</span>
-      <button className="text-button" onClick={onHelp}>
-        <BookOpen size={14} />
-        About this demo
-      </button>
+      
     </footer>
   );
 }

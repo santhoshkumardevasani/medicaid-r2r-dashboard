@@ -35,9 +35,7 @@ export function AuditTrail({
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">CONTROL & TRACEABILITY</div>
-          <h1>The story behind every decision.</h1>
-          <p>Who reviewed it, what they decided, and the evidence they used.</p>
+          <div className="eyebrow">AUDIT TRAIL</div>
         </div>
         <button
           className="button button-secondary"
