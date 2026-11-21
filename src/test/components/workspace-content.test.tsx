@@ -24,7 +24,7 @@ it('resolves audit targets to their reconciliation and recommendation', () => {
     onOpen,
   };
   render(<DashboardPages {...props} view="audit" />);
-  expect(screen.getByRole('heading', { name: 'The story behind every decision.' })).toBeVisible();
+  expect(screen.getByText('AUDIT TRAIL')).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: 'AGT-001' }));
   expect(onOpen).toHaveBeenCalledWith(rows[0], 'recommendation');
 });
@@ -50,7 +50,7 @@ it('keeps retry available while loading and renders the page after data arrives'
   await user.click(screen.getByRole('button', { name: 'Try again' }));
   expect(refresh).toHaveBeenCalledOnce();
   rerender(<WorkspaceMain data={data} {...props} loading={false} error="" />);
-  expect(screen.getByRole('heading', { name: 'Every close. Clearly in view.' })).toBeVisible();
+  expect(screen.getByRole('region', { name: 'Close summary' })).toBeVisible();
   expect(screen.getByText(/Last service snapshot:/)).toBeVisible();
 });
 

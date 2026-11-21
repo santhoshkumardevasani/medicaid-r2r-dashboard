@@ -8,7 +8,7 @@ beforeEach(() => api.reset());
 
 async function ready() {
   render(<App />);
-  await screen.findByRole('heading', { name: 'Every close. Clearly in view.' });
+  await screen.findByRole('region', { name: 'Close summary' });
 }
 
 describe('application accessibility', () => {

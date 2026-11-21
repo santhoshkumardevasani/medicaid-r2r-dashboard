@@ -16,7 +16,7 @@ it('composes the overview panels and keeps summary actions wired', () => {
       onOpen={vi.fn()}
     />,
   );
-  expect(screen.getByRole('heading', { name: 'Every close. Clearly in view.' })).toBeVisible();
+  expect(screen.getByRole('region', { name: 'Close summary' })).toBeVisible();
   expect(screen.getByRole('heading', { name: 'Close readiness' })).toBeVisible();
   fireEvent.click(screen.getByRole('button', { name: /Agent reviews/ }));
   expect(onAgents).toHaveBeenCalledOnce();

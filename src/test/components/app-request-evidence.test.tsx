@@ -18,7 +18,7 @@ it('records an evidence request and updates the recommendation status', async ()
   });
   vi.spyOn(api, 'getSnapshot').mockResolvedValue(createSeed());
   render(<App />);
-  await screen.findByRole('heading', { name: 'Every close. Clearly in view.' });
+  await screen.findByRole('region', { name: 'Close summary' });
   await user.click(screen.getByRole('button', { name: 'Capitation receivables' }));
   const dialog = screen.getByRole('dialog', { name: 'Capitation receivables' });
   await user.click(within(dialog).getByRole('tab', { name: 'Agent recommendation' }));
@@ -47,7 +47,7 @@ it('updates the reconciliation table when a recommendation is approved', async (
   const user = userEvent.setup();
   vi.spyOn(api, 'getSnapshot').mockResolvedValue(createSeed());
   render(<App />);
-  await screen.findByRole('heading', { name: 'Every close. Clearly in view.' });
+  await screen.findByRole('region', { name: 'Close summary' });
   await user.click(screen.getByRole('button', { name: 'Capitation receivables' }));
   const dialog = screen.getByRole('dialog', { name: 'Capitation receivables' });
   await user.click(within(dialog).getByRole('tab', { name: 'Agent recommendation' }));
@@ -71,7 +71,7 @@ it('marks rejected recommendations in the reconciliation table and filter', asyn
   const user = userEvent.setup();
   vi.spyOn(api, 'getSnapshot').mockResolvedValue(createSeed());
   render(<App />);
-  await screen.findByRole('heading', { name: 'Every close. Clearly in view.' });
+  await screen.findByRole('region', { name: 'Close summary' });
   await user.click(screen.getByRole('button', { name: 'Capitation receivables' }));
   const dialog = screen.getByRole('dialog', { name: 'Capitation receivables' });
   await user.click(within(dialog).getByRole('tab', { name: 'Agent recommendation' }));

@@ -6,7 +6,7 @@ import { api } from './services/mockApi';
 beforeEach(() => api.reset());
 async function ready() {
   render(<App />);
-  await screen.findByRole('heading', { name: 'Every close. Clearly in view.' });
+  await screen.findByRole('region', { name: 'Close summary' });
 }
 
 describe('Controller workflow', () => {
@@ -91,7 +91,7 @@ describe('Controller workflow', () => {
     await user.click(screen.getByRole('button', { name: /Demo profile/ }));
     await user.click(screen.getByRole('button', { name: 'Simulate a service failure' }));
     await screen.findByRole('alert');
-    expect(screen.getByRole('heading', { name: 'Every close. Clearly in view.' })).toBeVisible();
+    expect(screen.getByRole('region', { name: 'Close summary' })).toBeVisible();
     await user.click(screen.getByRole('button', { name: 'Try again' }));
     await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
   });
