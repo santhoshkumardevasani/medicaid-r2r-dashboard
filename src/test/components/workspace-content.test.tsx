@@ -43,7 +43,6 @@ it('keeps retry available while loading and renders the page after data arrives'
     onFilter: vi.fn(),
     onNavigate: vi.fn(),
     onOpen: vi.fn(),
-    onHelp: vi.fn(),
   };
   const { rerender } = render(<WorkspaceMain data={null} {...props} />);
   expect(screen.getByRole('main')).toHaveAttribute('aria-busy', 'true');

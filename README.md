@@ -1,15 +1,14 @@
-# Aster · Medicaid Close
+# Medicaid R2R Dashboard
 
-A React + TypeScript assessment application for a healthcare Controller overseeing Medicaid Record-to-Report. All organizations, people, amounts, references, and source extracts in the application are synthetic.
+A responsive React + TypeScript dashboard for a Controller overseeing a synthetic Medicaid Record-to-Report close. Organizations, people, account balances, evidence, and agent recommendations are fictional.
 
-The implemented journey is **close overview → reconciliation → source evidence → agent recommendation → human decision → audit trail**.
+The workflow is **close overview → reconciliations → evidence → agent review → human decision → audit trail**.
 
 ## Run locally
 
-Use Node.js **22.12 or later** (Node 24 is recommended and was used for verification) and npm. No environment variables, API keys, database, account, or backend setup is needed.
+Use Node.js **22.12 or later** and npm. No environment variables, API keys, database, account, or backend setup are needed.
 
 ```bash
-# Unzip the submission and enter the application folder.
 cd medicaid-close
 npm ci
 npm run dev
@@ -18,58 +17,79 @@ npm run dev
 Open the local URL printed by Vite, normally `http://localhost:5173`.
 
 ```bash
-npm test                 # Vitest + React Testing Library + structural axe checks
-npm run test:coverage    # Text report and coverage/index.html
-npm run typecheck       # Strict TypeScript, including tests
-npm run build           # Checked, optimized static production build in dist/
-npm run preview         # Inspect the production build locally
+npm test                # Vitest, React Testing Library, and accessibility checks
+npm run test:coverage   # Coverage report
+npm run typecheck       # TypeScript project check
+npm run build           # Checked production build in dist/
+npm run preview         # Serve the production build locally
 ```
 
-The complete source, pinned lockfile, setup instructions, assessment explanation, CI workflow, and optional container configuration are included. Start with [docs/ASSESSMENT.md](docs/ASSESSMENT.md) for assumptions, decisions, trade-offs, implemented/proposed boundaries, and time spent. See [docs/VERIFICATION.md](docs/VERIFICATION.md) for verification results and limits.
+The project includes a lockfile, CI workflow, Docker/Nginx example, and additional documentation. See [docs/ASSESSMENT.md](docs/ASSESSMENT.md) for assumptions and production boundaries, and [docs/VERIFICATION.md](docs/VERIFICATION.md) for verification notes.
 
 ## Five-minute walkthrough
 
-1. **Close overview:** October 2026, all entities shows 7/12 reconciliations complete (58%), $547,500 gross absolute open variance, 3 material exceptions, and 3 pending agent reviews. Click a summary card to open its matching work queue.
-2. **Find the issue:** open _Capitation receivables_. Its GL is $22,876,000 and source register is $23,124,000, giving a signed GL − source variance of **−$248,000**.
+1. **Review the close:** October 2026, all entities show 7/12 reconciliations complete (58%), $547,500 gross absolute open variance, 3 material exceptions, and 3 pending agent reviews. Select a metric to open its related work queue.
+2. **Find an exception:** open _Reconciliations_ and select _Capitation receivables_. Its GL is $22,876,000 and source register is $23,124,000, giving a signed GL − source variance of **−$248,000**.
 3. **Inspect evidence:** expand the source extract. It includes control totals, source identity, extract timestamp, remittance reference, earned period, receipt date, and unposted amount. Download the synthetic evidence as JSON if useful.
 4. **Review the proposal:** open the _Agent recommendation_ tab. Read the rationale, illustrative confidence, limitations, proposed next step, and unposted illustrative journal. Choose an action, write a reason (12–1,000 characters), and acknowledge evidence review. The default choice requests more evidence.
-5. **Record and trace:** approve for preparation, request evidence, or reject. The recommendation status and queue counts update. The account remains open. The Activity tab and Audit trail retain actor, reason, evidence IDs, reviewed version, and request ID. Audit JSON export respects entity, period, and search selection.
-6. **Explore alternate states:** select New Jersey or New York; select September for a completed comparison period. Use _Demo controls_ to switch to a read-only Analyst or simulate a service failure. Retry recovers and retains the last successful snapshot.
+5. **Record and trace:** approve for preparation, request evidence, or reject. Approval moves the reconciliation from _Needs review_ to _In progress_; rejection marks it _Rejected_; an evidence request leaves the reconciliation status unchanged. No journal is posted. The Activity tab and Audit trail retain actor, reason, evidence IDs, reviewed version, and request ID.
+6. **Explore alternate states:** select New Jersey or New York; select September for a completed comparison period. Open the profile control to switch to a read-only Analyst or simulate a service failure. Retry retains the last successful snapshot.
 
-**Session behavior:** refresh the browser to reset all decisions. The in-memory demo is isolated per tab; it is not shared or durable. The dashboard’s refresh button rereads the mock service without resetting it. Historical source snapshot dates remain explicit; new review events use the current time in America/New_York.
+**Session behavior:** refresh the browser to reset all decisions. The in-memory demo is isolated per tab; it is not shared or durable. The dashboard refresh button rereads the mock service without resetting it. Historical source snapshot dates are fixed; new review events use the current time in America/New_York.
 
 ## Project structure
 
 ```text
 src/
-  App.tsx                         Application shell, shared scope, navigation
+  App.tsx                         Application state and workspace composition
+  main.tsx                        React entry point
+  styles.css                      Responsive application styles
+  App.test.tsx                    Application workflows
+  App.accessibility.test.tsx      Structural accessibility checks
   components/
-    Overview.tsx                  Summary cards, readiness, priorities, agent cards
-    Reconciliations.tsx           Search, filters, variance sorting, account table
-    ReconciliationDetail.tsx      Evidence and account activity
-    RecommendationReview.tsx      Rationale, proposed entry, human decision form
-    AgentQueue.tsx                Pending and reviewed recommendation queues
-    AuditTrail.tsx                Searchable, scoped history and JSON export
-    ui.tsx                        Dialog, badges, empty/error/loading states
+    NavigationPanel.tsx           Primary workspace navigation
+    Workspace*.tsx                Toolbar, page content, navigation, and overlays
+    DashboardPages.tsx            Routes the four workspace views
+    Overview*.tsx                 Overview summary
+    ReadinessPanel.tsx            Close readiness stages
+    FocusPanel.tsx                 High-risk and missing-data actions
+    ExceptionsPanel.tsx            Open reconciliation summary
+    AgentRecommendations.tsx       Recommendation cards on the overview
+    AgentQueue.tsx                 Pending and reviewed recommendations
+    Reconciliations.tsx            Searchable, filterable account table
+    Reconciliation*.tsx            Detail header, evidence, activity, and table
+    Recommendation*.tsx            Rationale and decision workflow
+    Decision*.tsx                  Review choices and submission form
+    Audit*.tsx                     Scoped audit list and event details
+    DemoDialogs.tsx                Demo controls and guide dialogs
+    Modal.tsx, ui.tsx              Shared modal and UI primitives
   domain/
-    types.ts                      Zod runtime schemas and inferred TypeScript types
-    fixtures.ts                   Deterministic, synthetic source data
-    selectors.ts                  Scope, variance, materiality, formatting
-  hooks/useDashboard.ts           Read cancellation and stale-response protection
+    types.ts                       Zod schemas and inferred types
+    fixtures.ts, fixture*.ts, *Rows.ts  Synthetic close, evidence, and recommendation data
+    selectors.ts                   Scope, metrics, variance, and formatting
+  hooks/
+    useDashboard.ts                Loading, retry, and stale-read handling
   services/
-    mockApi.ts                    Async service with validation and review controls
-    download.ts                   JSON exports and object-URL cleanup
-  test/setup.ts                   Test environment and jsdom dialog shim
+    mockApi.ts                     In-memory decision service
+    decisionSchema.ts              Decision request validation
+    createId.ts                    Browser-compatible unique IDs
+    download.ts                    JSON export helper
+  test/
+    setup.ts                       Vitest and jsdom setup
+    components/                    Component and workflow tests
+index.html                         HTML entry point
+vite.config.ts                     Vite and Vitest configuration
+docs/                              Assessment and verification notes
 ```
 
 ## Deploy
 
-`npm run build` produces a static application; serve `dist/` on an HTTPS host. There are no external fonts, analytics, real model calls, or third-party API requests. The private hosted demo uses the same source and synthetic browser-local service.
+`npm run build` produces a static application; serve `dist/` on an HTTPS host. The application uses no external fonts, analytics, real model calls, or third-party API requests.
 
 Optional Docker deployment:
 
 ```bash
-docker build -t aster-medicaid-close .
+docker build -t medicaid-r2r-dashboard .
 docker run --rm -p 8080:8080 aster-medicaid-close
 ```
 
@@ -79,7 +99,7 @@ The CSP permits inline **styles** for the CSS-based progress indicators. Scripts
 
 ## Important scope boundaries
 
-- Review actions are mock workflow transitions. No ERP posting, close sign-off, email, task delivery to an owner, or bank/state integration occurs.
+- Review actions are mock workflow transitions. Approval moves an eligible reconciliation to _In progress_; rejection marks it _Rejected_; neither posts a journal or signs off the close. Evidence requests do not change the reconciliation status. No email, task delivery, or bank/state integration occurs.
 - The simulated role is intentionally switchable. Client code is not an authorization boundary. Move review controls into an authenticated backend before using real data.
 - Confidence values are fixture metadata, uncalibrated and unsuitable for automatic accounting decisions.
 - The audit history is append-only through the mock service API; it is not tamper-resistant or durable in a browser.

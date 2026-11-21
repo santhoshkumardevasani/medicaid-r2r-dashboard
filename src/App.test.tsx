@@ -76,7 +76,7 @@ describe('Controller workflow', () => {
   it('makes the Analyst recommendation view read-only', async () => {
     const user = userEvent.setup();
     await ready();
-    await user.click(screen.getByRole('button', { name: 'Demo controls' }));
+    await user.click(screen.getByRole('button', { name: /Demo profile/ }));
     await user.selectOptions(screen.getByLabelText('Demo role'), 'analyst');
     await user.click(screen.getByRole('button', { name: 'Done' }));
     await user.click(screen.getByRole('button', { name: 'Agent review' }));
@@ -88,7 +88,7 @@ describe('Controller workflow', () => {
   it('retains the last successful snapshot through a service error and retry', async () => {
     const user = userEvent.setup();
     await ready();
-    await user.click(screen.getByRole('button', { name: 'Demo controls' }));
+    await user.click(screen.getByRole('button', { name: /Demo profile/ }));
     await user.click(screen.getByRole('button', { name: 'Simulate a service failure' }));
     await screen.findByRole('alert');
     expect(screen.getByRole('heading', { name: 'Every close. Clearly in view.' })).toBeVisible();

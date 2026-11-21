@@ -1,15 +1,5 @@
 import type { KeyboardEventHandler, RefObject } from 'react';
-import {
-  CircleHelp,
-  FileClock,
-  LayoutDashboard,
-  ListChecks,
-  LockKeyhole,
-  Settings2,
-  ShieldCheck,
-  Sparkles,
-  X,
-} from 'lucide-react';
+import { FileClock, LayoutDashboard, ListChecks, Sparkles, X } from 'lucide-react';
 import type { View } from '../domain/types';
 
 export const NAV_ITEMS: Array<{ id: View; label: string; icon: typeof LayoutDashboard }> = [
@@ -26,8 +16,6 @@ export function NavigationPanel({
   open,
   onKeyDown,
   onNavigate,
-  onHelp,
-  onSettings,
   onClose,
 }: {
   navRef: RefObject<HTMLElement | null>;
@@ -36,8 +24,6 @@ export function NavigationPanel({
   open: boolean;
   onKeyDown: KeyboardEventHandler<HTMLElement>;
   onNavigate: (view: View) => void;
-  onHelp: () => void;
-  onSettings: () => void;
   onClose: () => void;
 }) {
   return (
@@ -84,7 +70,7 @@ export function NavigationPanel({
           </button>
         ))}
       </nav>
-      
+
       <div className="sidebar-footer">
         <div className="sidebar-version">
           <span className="status-dot" /> Assessment build · v1.0

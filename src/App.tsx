@@ -64,8 +64,6 @@ export default function App() {
         pending={pending}
         open={navigationOpen}
         onNavigate={navigate}
-        onHelp={() => setHelpOpen(true)}
-        onSettings={() => setSettingsOpen(true)}
         onClose={() => setNavigationOpen(false)}
       />
       <div className="main-shell" inert={navigationOpen ? true : undefined}>
@@ -91,7 +89,6 @@ export default function App() {
           onFilter={setFilter}
           onNavigate={navigate}
           onOpen={openRow}
-          onHelp={() => setHelpOpen(true)}
         />
       </div>
       <WorkspaceOverlays

@@ -16,7 +16,6 @@ export function WorkspaceMain({
   onFilter,
   onNavigate,
   onOpen,
-  onHelp,
 }: {
   data: Snapshot | null;
   loading: boolean;
@@ -28,7 +27,6 @@ export function WorkspaceMain({
   onFilter: (filter: ReconciliationFilter) => void;
   onNavigate: (view: View) => void;
   onOpen: (row: Reconciliation, tab?: 'evidence' | 'recommendation') => void;
-  onHelp: () => void;
 }) {
   const mainRef = useRef<HTMLElement>(null);
   const firstView = useRef(true);
@@ -67,7 +65,7 @@ export function WorkspaceMain({
             onAgents={() => onNavigate('agents')}
             onOpen={onOpen}
           />
-          <WorkspaceFooter lastSynced={data.lastSynced} onHelp={onHelp} />
+          <WorkspaceFooter lastSynced={data.lastSynced} />
         </>
       ) : (
         !loading && (

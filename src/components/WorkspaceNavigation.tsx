@@ -8,16 +8,12 @@ export function WorkspaceNavigation({
   pending,
   open,
   onNavigate,
-  onHelp,
-  onSettings,
   onClose,
 }: {
   view: View;
   pending: number;
   open: boolean;
   onNavigate: (view: View) => void;
-  onHelp: () => void;
-  onSettings: () => void;
   onClose: () => void;
 }) {
   const navRef = useRef<HTMLElement>(null);
@@ -64,8 +60,6 @@ export function WorkspaceNavigation({
         open={open}
         onKeyDown={trapFocus}
         onNavigate={onNavigate}
-        onHelp={onHelp}
-        onSettings={onSettings}
         onClose={onClose}
       />
       {open && (
